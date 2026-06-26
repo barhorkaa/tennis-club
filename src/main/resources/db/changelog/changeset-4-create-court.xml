@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="create-court-table" author="generated">
+        <createTable tableName="court">
+
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="deleted" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="surface_type_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+
+        </createTable>
+    </changeSet>
+
+    <changeSet id="fk-court-surface-type" author="generated">
+        <addForeignKeyConstraint
+                baseTableName="court"
+                baseColumnNames="surface_type_id"
+                referencedTableName="surface_type"
+                referencedColumnNames="id"
+                constraintName="fk_court_surface_type"
+                onDelete="SET NULL"/>
+    </changeSet>
+
+    <changeSet id="idx-court-surface-type" author="generated">
+        <createIndex indexName="idx_court_surface_type_id"
+                     tableName="court">
+            <column name="surface_type_id"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>
