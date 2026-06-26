@@ -13,6 +13,15 @@ public class GlobalExceptionHandler {
     ) {
         return ex.getMessage();
     }
+
+    @ExceptionHandler(CourtNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String handleCourtNotFound(
+            CourtNotFoundException ex
+    ) {
+        return ex.getMessage();
+    }
+
     @ExceptionHandler(SurfaceTypeNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String handleSurfaceTypeNotFound(
