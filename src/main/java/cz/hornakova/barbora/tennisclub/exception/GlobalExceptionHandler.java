@@ -13,4 +13,11 @@ public class GlobalExceptionHandler {
     ) {
         return ex.getMessage();
     }
+    @ExceptionHandler(SurfaceTypeNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String handleSurfaceTypeNotFound(
+            SurfaceTypeNotFoundException ex
+    ) {
+        return ex.getMessage();
+    }
 }
