@@ -5,8 +5,10 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
     <include file="db/changelog/changeset-1-create-customer.xml" />
-    <include file="db/changelog/changeset-2-seed-customer.xml" context="dev" />
-    <include file="db/changelog/changeset-3-create-surfacetype.xml" context="dev" />
-    <include file="db/changelog/changeset-4-create-court.xml" context="dev" />
+    <include file="db/changelog/changeset-3-create-surfacetype.xml" />
+    <include file="db/changelog/changeset-4-create-court.xml" />
     <include file="db/changelog/changeset-5-create-reservation.xml" />
+
+    <include file="db/changelog/changeset-100-init-surface-types.xml" context="init-data"/>
+    <include file="db/changelog/changeset-200-init-courts.xml" context="init-data"/>
 </databaseChangeLog>
