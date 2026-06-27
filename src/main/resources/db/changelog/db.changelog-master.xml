@@ -8,7 +8,9 @@
     <include file="db/changelog/changeset-3-create-surfacetype.xml" />
     <include file="db/changelog/changeset-4-create-court.xml" />
     <include file="db/changelog/changeset-5-create-reservation.xml" />
+    <include file="db/changelog/changeset-6-create-auth-user.xml" />
 
     <include file="db/changelog/changeset-100-init-surface-types.xml" context="init-data"/>
     <include file="db/changelog/changeset-200-init-courts.xml" context="init-data"/>
+    <include file="db/changelog/changeset-300-init-auth-users.xml" context="init-data"/>
 </databaseChangeLog>
