@@ -10,7 +10,7 @@
 
         <createTable tableName="surface_type">
 
-            <column name="id" type="BIGINT" autoIncrement="true">
+            <column name="id" type="INT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
 

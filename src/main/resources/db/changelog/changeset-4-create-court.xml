@@ -9,7 +9,7 @@
     <changeSet id="create-court-table" author="generated">
         <createTable tableName="court">
 
-            <column name="id" type="BIGINT" autoIncrement="true">
+            <column name="id" type="INT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
 
@@ -21,7 +21,7 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="surface_type_id" type="BIGINT">
+            <column name="surface_type_id" type="INT">
                 <constraints nullable="true"/>
             </column>
 
