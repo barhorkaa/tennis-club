@@ -29,4 +29,17 @@ public class GlobalExceptionHandler {
     ) {
         return ex.getMessage();
     }
+
+    @ExceptionHandler(ReservationNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String handleReservationNotFound(
+            ReservationNotFoundException ex
+    ) {
+        return ex.getMessage();
+    }
+
+    @ExceptionHandler(ReservationCollisionException.class)
+    public ResponseEntity<String> handleReservationCollision(ReservationCollisionException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
 }
