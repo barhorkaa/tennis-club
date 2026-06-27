@@ -1,8 +1,8 @@
 package cz.hornakova.barbora.tennisclub.mapper;
 
-import cz.hornakova.barbora.tennisclub.model.dto.SurfaceTypeCreateRequest;
+import cz.hornakova.barbora.tennisclub.model.dto.SurfaceTypeRequest;
 import cz.hornakova.barbora.tennisclub.model.dto.SurfaceTypeResponse;
-import cz.hornakova.barbora.tennisclub.model.dto.SurfaceTypeUpdateRequest;
+import cz.hornakova.barbora.tennisclub.model.dto.SurfaceTypeRequest;
 import cz.hornakova.barbora.tennisclub.model.entity.SurfaceType;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +17,7 @@ public class SurfaceTypeMapper {
         );
     }
 
-    public SurfaceType toEntity(SurfaceTypeCreateRequest request) {
+    public SurfaceType toEntity(SurfaceTypeRequest request) {
         SurfaceType surfaceType = new SurfaceType();
 
         surfaceType.setName(request.name());
@@ -28,7 +28,7 @@ public class SurfaceTypeMapper {
 
     public void updateEntity(
             SurfaceType surfaceType,
-            SurfaceTypeUpdateRequest request
+            SurfaceTypeRequest request
     ) {
         surfaceType.setName(request.name());
         surfaceType.setPricePerMinute(request.pricePerMinute());

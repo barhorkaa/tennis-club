@@ -1,9 +1,9 @@
 package cz.hornakova.barbora.tennisclub.controller;
 
-import cz.hornakova.barbora.tennisclub.model.dto.SurfaceTypeCreateRequest;
+import cz.hornakova.barbora.tennisclub.model.dto.SurfaceTypeRequest;
 import cz.hornakova.barbora.tennisclub.model.dto.SurfaceTypeResponse;
-import cz.hornakova.barbora.tennisclub.model.dto.SurfaceTypeUpdateRequest;
 import cz.hornakova.barbora.tennisclub.service.SurfaceTypeService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,7 +30,7 @@ public class SurfaceTypeController {
 
     @PostMapping
     public SurfaceTypeResponse create(
-            @RequestBody SurfaceTypeCreateRequest request
+            @RequestBody SurfaceTypeRequest request
     ) {
         return surfaceTypeService.create(request);
     }
@@ -38,7 +38,7 @@ public class SurfaceTypeController {
     @PutMapping("/{id}")
     public SurfaceTypeResponse update(
             @PathVariable Long id,
-            @RequestBody SurfaceTypeUpdateRequest request
+            @RequestBody SurfaceTypeRequest request
     ) {
         return surfaceTypeService.update(id, request);
     }

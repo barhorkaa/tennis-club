@@ -1,9 +1,9 @@
 package cz.hornakova.barbora.tennisclub.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import cz.hornakova.barbora.tennisclub.model.dto.SurfaceTypeCreateRequest;
+import cz.hornakova.barbora.tennisclub.model.dto.SurfaceTypeRequest;
 import cz.hornakova.barbora.tennisclub.model.dto.SurfaceTypeResponse;
-import cz.hornakova.barbora.tennisclub.model.dto.SurfaceTypeUpdateRequest;
+import cz.hornakova.barbora.tennisclub.model.dto.SurfaceTypeRequest;
 import cz.hornakova.barbora.tennisclub.service.SurfaceTypeService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +55,7 @@ class SurfaceTypeControllerTest {
 
     @Test
     void create_shouldReturnCreated() throws Exception {
-        SurfaceTypeCreateRequest request = new SurfaceTypeCreateRequest("Clay", new BigDecimal("0.40"));
+        SurfaceTypeRequest request = new SurfaceTypeRequest("Clay", new BigDecimal("0.40"));
 
         when(surfaceTypeService.create(any()))
                 .thenReturn(new SurfaceTypeResponse(1L, "Clay", new BigDecimal("0.40")));
@@ -69,7 +69,7 @@ class SurfaceTypeControllerTest {
 
     @Test
     void update_shouldReturnUpdated() throws Exception {
-        SurfaceTypeUpdateRequest request = new SurfaceTypeUpdateRequest("Hard", new BigDecimal("0.35"));
+        SurfaceTypeRequest request = new SurfaceTypeRequest("Hard", new BigDecimal("0.35"));
 
         when(surfaceTypeService.update(eq(1L), any()))
                 .thenReturn(new SurfaceTypeResponse(1L, "Hard", new BigDecimal("0.35")));

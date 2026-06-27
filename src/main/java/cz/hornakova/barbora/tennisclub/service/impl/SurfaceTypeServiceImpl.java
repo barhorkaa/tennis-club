@@ -3,9 +3,9 @@ package cz.hornakova.barbora.tennisclub.service.impl;
 import cz.hornakova.barbora.tennisclub.dao.SurfaceTypeDao;
 import cz.hornakova.barbora.tennisclub.exception.SurfaceTypeNotFoundException;
 import cz.hornakova.barbora.tennisclub.mapper.SurfaceTypeMapper;
-import cz.hornakova.barbora.tennisclub.model.dto.SurfaceTypeCreateRequest;
+import cz.hornakova.barbora.tennisclub.model.dto.SurfaceTypeRequest;
 import cz.hornakova.barbora.tennisclub.model.dto.SurfaceTypeResponse;
-import cz.hornakova.barbora.tennisclub.model.dto.SurfaceTypeUpdateRequest;
+import cz.hornakova.barbora.tennisclub.model.dto.SurfaceTypeRequest;
 import cz.hornakova.barbora.tennisclub.model.entity.SurfaceType;
 import cz.hornakova.barbora.tennisclub.service.SurfaceTypeService;
 import org.springframework.stereotype.Service;
@@ -41,7 +41,7 @@ public class SurfaceTypeServiceImpl implements SurfaceTypeService {
     }
 
     @Override
-    public SurfaceTypeResponse create(SurfaceTypeCreateRequest request) {
+    public SurfaceTypeResponse create(SurfaceTypeRequest request) {
         SurfaceType surfaceType = mapper.toEntity(request);
 
         surfaceTypeDao.save(surfaceType);
@@ -50,7 +50,7 @@ public class SurfaceTypeServiceImpl implements SurfaceTypeService {
     }
 
     @Override
-    public SurfaceTypeResponse update(Long id, SurfaceTypeUpdateRequest request) {
+    public SurfaceTypeResponse update(Long id, SurfaceTypeRequest request) {
         SurfaceType surfaceType = surfaceTypeDao.getById(id)
                 .orElseThrow(() ->
                         new SurfaceTypeNotFoundException(id));

@@ -54,7 +54,7 @@ class SurfaceTypeServiceImplTest {
     @Test
     void create_shouldSave() {
         SurfaceType st = new SurfaceType();
-        SurfaceTypeCreateRequest req = new SurfaceTypeCreateRequest("Clay", new BigDecimal("0.35"));
+        SurfaceTypeRequest req = new SurfaceTypeRequest("Clay", new BigDecimal("0.35"));
 
         when(mapper.toEntity(req)).thenReturn(st);
         when(mapper.toResponse(st))
@@ -68,7 +68,7 @@ class SurfaceTypeServiceImplTest {
     @Test
     void update_shouldUpdate() {
         SurfaceType st = new SurfaceType();
-        SurfaceTypeUpdateRequest req = new SurfaceTypeUpdateRequest("Hard", new BigDecimal("0.40"));
+        SurfaceTypeRequest req = new SurfaceTypeRequest("Hard", new BigDecimal("0.40"));
 
         when(dao.getById(1L)).thenReturn(Optional.of(st));
 
