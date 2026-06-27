@@ -42,15 +42,12 @@ public class SurfaceTypeDaoImpl implements SurfaceTypeDao {
 
     @Override
     public SurfaceType save(SurfaceType surfaceType) {
-//        if (surfaceType.getId() == null) {
+        if (surfaceType.getId() == 0) {
             em.persist(surfaceType);
             return surfaceType;
-//        }
-    }
+        }
 
-    @Override
-    public void update(SurfaceType surfaceType) {
-        em.merge(surfaceType);
+        return em.merge(surfaceType);
     }
 
     @Override

@@ -42,10 +42,11 @@ class SurfaceTypeDaoImplTest {
     }
 
     @Test
-    void update_shouldMerge() {
+    void save_existingEntity_shouldMerge() {
         SurfaceType st = new SurfaceType();
+        st.setId(1L);
 
-        dao.update(st);
+        dao.save(st);
 
         verify(em).merge(st);
     }

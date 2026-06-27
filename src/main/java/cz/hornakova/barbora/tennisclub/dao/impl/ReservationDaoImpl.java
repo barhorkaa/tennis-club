@@ -52,11 +52,6 @@ public class ReservationDaoImpl implements ReservationDao {
     }
 
     @Override
-    public void update(Reservation reservation) {
-        em.merge(reservation);
-    }
-
-    @Override
     public void delete(Reservation reservation) {
         reservation.setDeleted(true);
 

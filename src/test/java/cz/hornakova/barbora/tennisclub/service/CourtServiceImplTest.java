@@ -22,8 +22,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -105,6 +104,7 @@ class CourtServiceImplTest {
 
     @Test
     void update_shouldUpdateCourt() {
+
         CourtUpdateRequest req = new CourtUpdateRequest("B", 2L);
 
         Court c = new Court();
@@ -113,15 +113,15 @@ class CourtServiceImplTest {
         when(courtDao.getById(1L)).thenReturn(Optional.of(c));
         when(surfaceTypeDao.getById(2L)).thenReturn(Optional.of(st));
 
-        doNothing().when(mapper).updateEntity(c, req, st);
+        when(courtDao.save(any())).thenAnswer(i -> i.getArgument(0));
 
-        when(mapper.toResponse(c))
-                .thenReturn(new CourtResponse(1L, "B", new SurfaceTypeResponse(2L, "Clay", new BigDecimal("0.40"))));
+        CourtResponse response = mock(CourtResponse.class);
+        when(mapper.toResponse(any())).thenReturn(response);
 
         var result = service.update(1L, req);
 
-        verify(courtDao).update(c);
-        assertEquals("B", result.name());
+        verify(courtDao).save(c);
+        assertSame(response, result);
     }
 
     @Test

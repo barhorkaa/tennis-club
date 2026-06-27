@@ -50,8 +50,9 @@ class CourtDaoImplTest {
     @Test
     void update_shouldMerge() {
         Court c = new Court();
+        c.setId(1L);
 
-        dao.update(c);
+        dao.save(c);
 
         verify(em).merge(c);
     }

@@ -74,7 +74,7 @@ class SurfaceTypeServiceImplTest {
 
         service.update(1L, req);
 
-        verify(dao).update(st);
+        verify(dao).save(st);
     }
 
     @Test

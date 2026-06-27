@@ -68,9 +68,9 @@ public class CourtServiceImpl implements CourtService {
 
         mapper.updateEntity(court, request, surfaceType);
 
-        courtDao.update(court);
+        Court saved = courtDao.save(court);
 
-        return mapper.toResponse(court);
+        return mapper.toResponse(saved);
     }
 
     @Override

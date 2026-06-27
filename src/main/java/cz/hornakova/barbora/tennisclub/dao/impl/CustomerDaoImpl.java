@@ -59,15 +59,12 @@ public class CustomerDaoImpl implements CustomerDao {
     @Override
     public Customer save(Customer customer) {
 
-//        if (customer.getId() == null) {
+        if (customer.getId() == 0) {
             em.persist(customer);
             return customer;
-//        }
-    }
+        }
 
-    @Override
-    public void update(Customer customer) {
-        em.merge(customer);
+        return  em.merge(customer);
     }
 
     @Override

@@ -42,15 +42,12 @@ public class CourtDaoImpl implements CourtDao {
 
     @Override
     public Court save(Court court) {
-        //        if (customer.getId() == null) {
-        em.persist(court);
-        return court;
-        //        }
-    }
+        if (court.getId() == 0) {
+            em.persist(court);
+            return court;
+        }
 
-    @Override
-    public void update(Court court) {
-        em.merge(court);
+        return em.merge(court);
     }
 
     @Override

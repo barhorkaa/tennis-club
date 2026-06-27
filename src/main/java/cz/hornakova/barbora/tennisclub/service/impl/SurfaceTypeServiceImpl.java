@@ -57,7 +57,7 @@ public class SurfaceTypeServiceImpl implements SurfaceTypeService {
 
         mapper.updateEntity(surfaceType, request);
 
-        surfaceTypeDao.update(surfaceType);
+        surfaceTypeDao.save(surfaceType);
 
         return mapper.toResponse(surfaceType);
     }

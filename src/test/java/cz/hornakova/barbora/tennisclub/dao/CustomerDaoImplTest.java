@@ -97,7 +97,7 @@ class CustomerDaoImplTest {
     void shouldUpdateCustomer() {
         customer.setName("Updated");
 
-        customerDao.update(customer);
+        customerDao.save(customer);
         em.flush();
 
         Customer updated = em.find(Customer.class, customer.getId());
