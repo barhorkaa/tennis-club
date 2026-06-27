@@ -1,0 +1,50 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+note "All entities have soft delete feature" as N1
+
+class Court {
+    +id : Long
+    +name : String
+    +deleted : boolean
+}
+
+class Customer {
+    +id : Long
+    +name : String
+    +phoneNumber : String
+    +deleted : boolean
+}
+
+class Reservation {
+    +id : Long
+    +date : LocalDate
+    +start : LocalTime
+    +end : LocalTime
+    +createdAt : LocalDateTime
+    +price : BigDecimal
+    +deleted : boolean
+    ---
+    + calculatePrice() : BigDecimal
+    + overlaps(start: LocalTime, end: LocalTime) : boolean
+}
+
+class SurfaceType {
+    +id : Long
+    +name : String
+    +pricePerMinute : BigDecimal
+    +deleted : boolean
+}
+
+enum GameType {
+    SINGLES
+    DOUBLES
+}
+
+SurfaceType "1" <-- "0..*" Court : has
+
+GameType <-- Reservation : gameType
+Court "1" <-- "0..*" Reservation
+Customer "1" <-- "0..*" Reservation
+
+@enduml

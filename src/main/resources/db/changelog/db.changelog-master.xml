@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <include file="db/changelog/changeset-1-create-customer.xml" />
+    <include file="db/changelog/changeset-3-create-surfacetype.xml" />
+    <include file="db/changelog/changeset-4-create-court.xml" />
+    <include file="db/changelog/changeset-5-create-reservation.xml" />
+    <include file="db/changelog/changeset-6-create-auth-user.xml" />
+
+    <include file="db/changelog/changeset-100-init-surface-types.xml" context="init-data"/>
+    <include file="db/changelog/changeset-200-init-courts.xml" context="init-data"/>
+    <include file="db/changelog/changeset-300-init-auth-users.xml" context="init-data"/>
+</databaseChangeLog>

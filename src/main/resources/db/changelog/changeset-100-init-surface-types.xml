@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="init-surface-types" author="generated" context="init-data">
+
+        <insert tableName="surface_type">
+            <column name="name" value="Clay"/>
+            <column name="price_per_minute" valueNumeric="1"/>
+        </insert>
+
+        <insert tableName="surface_type">
+            <column name="name" value="Grass"/>
+            <column name="price_per_minute" valueNumeric="2"/>
+        </insert>
+
+    </changeSet>
+
+</databaseChangeLog>
