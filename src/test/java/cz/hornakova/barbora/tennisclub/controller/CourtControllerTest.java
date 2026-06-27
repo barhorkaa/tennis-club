@@ -1,9 +1,9 @@
 package cz.hornakova.barbora.tennisclub.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import cz.hornakova.barbora.tennisclub.model.dto.CourtCreateRequest;
+import cz.hornakova.barbora.tennisclub.model.dto.CourtRequest;
 import cz.hornakova.barbora.tennisclub.model.dto.CourtResponse;
-import cz.hornakova.barbora.tennisclub.model.dto.CourtUpdateRequest;
+import cz.hornakova.barbora.tennisclub.model.dto.CourtRequest;
 import cz.hornakova.barbora.tennisclub.model.dto.SurfaceTypeResponse;
 import cz.hornakova.barbora.tennisclub.service.CourtService;
 import org.junit.jupiter.api.Test;
@@ -80,13 +80,13 @@ class CourtControllerTest {
     @Test
     void shouldCreateCourt() throws Exception {
 
-        CourtCreateRequest request =
-                new CourtCreateRequest("Court A", 10L);
+        CourtRequest request =
+                new CourtRequest("Court A", 10L);
 
         CourtResponse response =
                 new CourtResponse(1L, "Court A", surfaceType());
 
-        when(courtService.create(any(CourtCreateRequest.class)))
+        when(courtService.create(any(CourtRequest.class)))
                 .thenReturn(response);
 
         mockMvc.perform(post("/api/courts")
@@ -96,19 +96,19 @@ class CourtControllerTest {
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.surfaceType.id").value(1L));
 
-        verify(courtService).create(any(CourtCreateRequest.class));
+        verify(courtService).create(any(CourtRequest.class));
     }
 
     @Test
     void shouldUpdateCourt() throws Exception {
 
-        CourtUpdateRequest request =
-                new CourtUpdateRequest("Updated Court", 20L);
+        CourtRequest request =
+                new CourtRequest("Updated Court", 20L);
 
         CourtResponse response =
                 new CourtResponse(1L, "Updated Court", surfaceType());
 
-        when(courtService.update(eq(1L), any(CourtUpdateRequest.class)))
+        when(courtService.update(eq(1L), any(CourtRequest.class)))
                 .thenReturn(response);
 
         mockMvc.perform(put("/api/courts/1")
@@ -118,7 +118,7 @@ class CourtControllerTest {
                 .andExpect(jsonPath("$.name").value("Updated Court"))
                 .andExpect(jsonPath("$.surfaceType.name").value("Clay"));
 
-        verify(courtService).update(eq(1L), any(CourtUpdateRequest.class));
+        verify(courtService).update(eq(1L), any(CourtRequest.class));
     }
 
     @Test

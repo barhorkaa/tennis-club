@@ -1,8 +1,8 @@
 package cz.hornakova.barbora.tennisclub.mapper;
 
-import cz.hornakova.barbora.tennisclub.model.dto.CourtCreateRequest;
+import cz.hornakova.barbora.tennisclub.model.dto.CourtRequest;
 import cz.hornakova.barbora.tennisclub.model.dto.CourtResponse;
-import cz.hornakova.barbora.tennisclub.model.dto.CourtUpdateRequest;
+import cz.hornakova.barbora.tennisclub.model.dto.CourtRequest;
 import cz.hornakova.barbora.tennisclub.model.entity.Court;
 import cz.hornakova.barbora.tennisclub.model.entity.SurfaceType;
 import org.springframework.stereotype.Component;
@@ -24,7 +24,7 @@ public class CourtMapper {
         );
     }
 
-    public Court toEntity(CourtCreateRequest request, SurfaceType surfaceType) {
+    public Court toEntity(CourtRequest request, SurfaceType surfaceType) {
         Court court = new Court();
 
         court.setName(request.name());
@@ -35,7 +35,7 @@ public class CourtMapper {
 
     public void updateEntity(
             Court court,
-            CourtUpdateRequest request,
+            CourtRequest request,
             SurfaceType surfaceType
     ) {
         court.setName(request.name());

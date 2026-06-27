@@ -43,7 +43,7 @@ public class CourtServiceImpl implements CourtService {
     }
 
     @Override
-    public CourtResponse create(CourtCreateRequest request) {
+    public CourtResponse create(CourtRequest request) {
 
         SurfaceType surfaceType = surfaceTypeDao.getById(request.surfaceTypeId())
                 .orElseThrow(() ->
@@ -57,7 +57,7 @@ public class CourtServiceImpl implements CourtService {
     }
 
     @Override
-    public CourtResponse update(Long id, CourtUpdateRequest request) {
+    public CourtResponse update(Long id, CourtRequest request) {
 
         Court court = courtDao.getById(id)
                 .orElseThrow(() -> new CourtNotFoundException(id));

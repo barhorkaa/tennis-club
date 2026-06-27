@@ -1,9 +1,9 @@
 package cz.hornakova.barbora.tennisclub.controller;
 
-import cz.hornakova.barbora.tennisclub.model.dto.CourtCreateRequest;
+import cz.hornakova.barbora.tennisclub.model.dto.CourtRequest;
 import cz.hornakova.barbora.tennisclub.model.dto.CourtResponse;
-import cz.hornakova.barbora.tennisclub.model.dto.CourtUpdateRequest;
 import cz.hornakova.barbora.tennisclub.service.CourtService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,7 +30,7 @@ public class CourtController {
 
     @PostMapping
     public CourtResponse create(
-            @RequestBody CourtCreateRequest request
+            @RequestBody CourtRequest request
     ) {
         return courtService.create(request);
     }
@@ -38,7 +38,7 @@ public class CourtController {
     @PutMapping("/{id}")
     public CourtResponse update(
             @PathVariable Long id,
-            @RequestBody CourtUpdateRequest request
+            @RequestBody CourtRequest request
     ) {
         return courtService.update(id, request);
     }

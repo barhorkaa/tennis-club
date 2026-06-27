@@ -5,9 +5,9 @@ import cz.hornakova.barbora.tennisclub.dao.SurfaceTypeDao;
 import cz.hornakova.barbora.tennisclub.exception.CourtNotFoundException;
 import cz.hornakova.barbora.tennisclub.exception.SurfaceTypeNotFoundException;
 import cz.hornakova.barbora.tennisclub.mapper.CourtMapper;
-import cz.hornakova.barbora.tennisclub.model.dto.CourtCreateRequest;
+import cz.hornakova.barbora.tennisclub.model.dto.CourtRequest;
 import cz.hornakova.barbora.tennisclub.model.dto.CourtResponse;
-import cz.hornakova.barbora.tennisclub.model.dto.CourtUpdateRequest;
+import cz.hornakova.barbora.tennisclub.model.dto.CourtRequest;
 import cz.hornakova.barbora.tennisclub.model.dto.SurfaceTypeResponse;
 import cz.hornakova.barbora.tennisclub.model.entity.Court;
 import cz.hornakova.barbora.tennisclub.model.entity.SurfaceType;
@@ -76,7 +76,7 @@ class CourtServiceImplTest {
 
     @Test
     void create_shouldSaveCourt() {
-        CourtCreateRequest req = new CourtCreateRequest("A", 1L);
+        CourtRequest req = new CourtRequest("A", 1L);
 
         SurfaceType st = new SurfaceType();
         Court c = new Court();
@@ -94,7 +94,7 @@ class CourtServiceImplTest {
 
     @Test
     void create_shouldThrowSurfaceTypeNotFound() {
-        CourtCreateRequest req = new CourtCreateRequest("A", 1L);
+        CourtRequest req = new CourtRequest("A", 1L);
 
         when(surfaceTypeDao.getById(1L)).thenReturn(Optional.empty());
 
@@ -105,7 +105,7 @@ class CourtServiceImplTest {
     @Test
     void update_shouldUpdateCourt() {
 
-        CourtUpdateRequest req = new CourtUpdateRequest("B", 2L);
+        CourtRequest req = new CourtRequest("B", 2L);
 
         Court c = new Court();
         SurfaceType st = new SurfaceType();
