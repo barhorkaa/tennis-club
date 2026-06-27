@@ -1,11 +1,13 @@
 package cz.hornakova.barbora.tennisclub.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import cz.hornakova.barbora.tennisclub.auth.JwtFilter;
 import cz.hornakova.barbora.tennisclub.model.dto.SurfaceTypeRequest;
 import cz.hornakova.barbora.tennisclub.model.dto.SurfaceTypeResponse;
 import cz.hornakova.barbora.tennisclub.service.SurfaceTypeService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -19,7 +21,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(SurfaceTypeController.class)
+@AutoConfigureMockMvc(addFilters = false)
 class SurfaceTypeControllerTest {
+
+    @MockitoBean
+    JwtFilter jwtFilter;
 
     @Autowired
     private MockMvc mockMvc;

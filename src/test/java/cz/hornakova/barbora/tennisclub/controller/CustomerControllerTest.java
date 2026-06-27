@@ -1,9 +1,11 @@
 package cz.hornakova.barbora.tennisclub.controller;
 
+import cz.hornakova.barbora.tennisclub.auth.JwtFilter;
 import cz.hornakova.barbora.tennisclub.model.dto.CustomerResponse;
 import cz.hornakova.barbora.tennisclub.service.CustomerService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -17,7 +19,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(CustomerController.class)
 @ActiveProfiles("test")
+@AutoConfigureMockMvc(addFilters = false)
 class CustomerControllerTest {
+
+    @MockitoBean
+    JwtFilter jwtFilter;
 
     @Autowired
     private MockMvc mockMvc;
