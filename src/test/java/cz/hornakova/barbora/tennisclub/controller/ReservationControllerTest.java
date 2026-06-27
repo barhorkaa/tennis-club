@@ -44,7 +44,7 @@ class ReservationControllerTest {
         when(reservationService.create(any()))
                 .thenReturn(mock(ReservationResponse.class));
 
-        mockMvc.perform(post("/reservations")
+        mockMvc.perform(post("/api/reservations")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(req)))
                 .andExpect(status().isOk());
@@ -65,7 +65,7 @@ class ReservationControllerTest {
         when(reservationService.update(eq(5L), any()))
                 .thenReturn(mock(ReservationResponse.class));
 
-        mockMvc.perform(put("/reservations/5")
+        mockMvc.perform(put("/api/reservations/5")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(req)))
                 .andExpect(status().isOk());

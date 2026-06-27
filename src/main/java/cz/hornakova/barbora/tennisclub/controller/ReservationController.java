@@ -4,12 +4,13 @@ import cz.hornakova.barbora.tennisclub.model.dto.ReservationCreateRequest;
 import cz.hornakova.barbora.tennisclub.model.dto.ReservationResponse;
 import cz.hornakova.barbora.tennisclub.model.dto.ReservationUpdateRequest;
 import cz.hornakova.barbora.tennisclub.service.ReservationService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/reservations")
+@RequestMapping("/api/reservations")
 public class ReservationController {
 
     private final ReservationService reservationService;
@@ -42,7 +43,7 @@ public class ReservationController {
     }
 
     @PostMapping
-    public ReservationResponse create(@RequestBody ReservationCreateRequest request) {
+    public ReservationResponse create(@Valid @RequestBody ReservationCreateRequest request) {
         return reservationService.create(request);
     }
 
