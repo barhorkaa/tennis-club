@@ -30,7 +30,7 @@ public class CourtController {
 
     @PostMapping
     public CourtResponse create(
-            @RequestBody CourtRequest request
+            @Valid @RequestBody CourtRequest request
     ) {
         return courtService.create(request);
     }
@@ -38,7 +38,7 @@ public class CourtController {
     @PutMapping("/{id}")
     public CourtResponse update(
             @PathVariable Long id,
-            @RequestBody CourtRequest request
+            @Valid @RequestBody CourtRequest request
     ) {
         return courtService.update(id, request);
     }

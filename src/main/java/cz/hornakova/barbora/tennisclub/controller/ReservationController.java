@@ -43,14 +43,16 @@ public class ReservationController {
     }
 
     @PostMapping
-    public ReservationResponse create(@Valid @RequestBody ReservationCreateRequest request) {
+    public ReservationResponse create(
+            @Valid @RequestBody ReservationCreateRequest request
+    ) {
         return reservationService.create(request);
     }
 
     @PutMapping("/{id}")
     public ReservationResponse update(
             @PathVariable Long id,
-            @RequestBody ReservationUpdateRequest request
+            @Valid @RequestBody ReservationUpdateRequest request
     ) {
         return reservationService.update(id, request);
     }

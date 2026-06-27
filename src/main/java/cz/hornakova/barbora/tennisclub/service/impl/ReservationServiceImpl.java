@@ -3,10 +3,7 @@ package cz.hornakova.barbora.tennisclub.service.impl;
 import cz.hornakova.barbora.tennisclub.dao.CourtDao;
 import cz.hornakova.barbora.tennisclub.dao.CustomerDao;
 import cz.hornakova.barbora.tennisclub.dao.ReservationDao;
-import cz.hornakova.barbora.tennisclub.exception.CourtNotFoundException;
-import cz.hornakova.barbora.tennisclub.exception.CustomerNotFoundException;
-import cz.hornakova.barbora.tennisclub.exception.ReservationCollisionException;
-import cz.hornakova.barbora.tennisclub.exception.ReservationNotFoundException;
+import cz.hornakova.barbora.tennisclub.exception.*;
 import cz.hornakova.barbora.tennisclub.mapper.ReservationMapper;
 import cz.hornakova.barbora.tennisclub.model.dto.ReservationCreateRequest;
 import cz.hornakova.barbora.tennisclub.model.dto.ReservationResponse;
@@ -169,6 +166,10 @@ public class ReservationServiceImpl implements ReservationService {
 
         Customer customer = customerDao.getById(request.customerId())
                 .orElseThrow(() -> new CustomerNotFoundException(request.customerId()));
+
+        if (request.end().isBefore(request.start())) {
+            throw new InvalidReservationException("End time must be after start time");
+        }
 
         if (reservationDao.isOverlapping(
                 id,

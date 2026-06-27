@@ -30,7 +30,7 @@ public class SurfaceTypeController {
 
     @PostMapping
     public SurfaceTypeResponse create(
-            @RequestBody SurfaceTypeRequest request
+            @Valid @RequestBody SurfaceTypeRequest request
     ) {
         return surfaceTypeService.create(request);
     }
@@ -38,7 +38,7 @@ public class SurfaceTypeController {
     @PutMapping("/{id}")
     public SurfaceTypeResponse update(
             @PathVariable Long id,
-            @RequestBody SurfaceTypeRequest request
+            @Valid @RequestBody SurfaceTypeRequest request
     ) {
         return surfaceTypeService.update(id, request);
     }
