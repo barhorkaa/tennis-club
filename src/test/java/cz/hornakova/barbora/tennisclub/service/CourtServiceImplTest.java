@@ -7,7 +7,6 @@ import cz.hornakova.barbora.tennisclub.exception.SurfaceTypeNotFoundException;
 import cz.hornakova.barbora.tennisclub.mapper.CourtMapper;
 import cz.hornakova.barbora.tennisclub.model.dto.CourtRequest;
 import cz.hornakova.barbora.tennisclub.model.dto.CourtResponse;
-import cz.hornakova.barbora.tennisclub.model.dto.CourtRequest;
 import cz.hornakova.barbora.tennisclub.model.dto.SurfaceTypeResponse;
 import cz.hornakova.barbora.tennisclub.model.entity.Court;
 import cz.hornakova.barbora.tennisclub.model.entity.SurfaceType;

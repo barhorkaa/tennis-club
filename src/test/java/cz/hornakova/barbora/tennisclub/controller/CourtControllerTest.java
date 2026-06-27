@@ -3,7 +3,6 @@ package cz.hornakova.barbora.tennisclub.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cz.hornakova.barbora.tennisclub.model.dto.CourtRequest;
 import cz.hornakova.barbora.tennisclub.model.dto.CourtResponse;
-import cz.hornakova.barbora.tennisclub.model.dto.CourtRequest;
 import cz.hornakova.barbora.tennisclub.model.dto.SurfaceTypeResponse;
 import cz.hornakova.barbora.tennisclub.service.CourtService;
 import org.junit.jupiter.api.Test;

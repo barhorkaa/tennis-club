@@ -5,7 +5,6 @@ import cz.hornakova.barbora.tennisclub.exception.SurfaceTypeNotFoundException;
 import cz.hornakova.barbora.tennisclub.mapper.SurfaceTypeMapper;
 import cz.hornakova.barbora.tennisclub.model.dto.SurfaceTypeRequest;
 import cz.hornakova.barbora.tennisclub.model.dto.SurfaceTypeResponse;
-import cz.hornakova.barbora.tennisclub.model.dto.SurfaceTypeRequest;
 import cz.hornakova.barbora.tennisclub.model.entity.SurfaceType;
 import cz.hornakova.barbora.tennisclub.service.SurfaceTypeService;
 import org.springframework.stereotype.Service;

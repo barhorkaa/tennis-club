@@ -2,7 +2,6 @@ package cz.hornakova.barbora.tennisclub.mapper;
 
 import cz.hornakova.barbora.tennisclub.model.dto.SurfaceTypeRequest;
 import cz.hornakova.barbora.tennisclub.model.dto.SurfaceTypeResponse;
-import cz.hornakova.barbora.tennisclub.model.dto.SurfaceTypeRequest;
 import cz.hornakova.barbora.tennisclub.model.entity.SurfaceType;
 import org.springframework.stereotype.Component;
 
