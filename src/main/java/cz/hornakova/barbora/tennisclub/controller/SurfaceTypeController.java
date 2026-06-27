@@ -4,6 +4,7 @@ import cz.hornakova.barbora.tennisclub.model.dto.SurfaceTypeRequest;
 import cz.hornakova.barbora.tennisclub.model.dto.SurfaceTypeResponse;
 import cz.hornakova.barbora.tennisclub.service.SurfaceTypeService;
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,16 +20,19 @@ public class SurfaceTypeController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public List<SurfaceTypeResponse> getAll() {
         return surfaceTypeService.getAll();
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public SurfaceTypeResponse getById(@PathVariable Long id) {
         return surfaceTypeService.getById(id);
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public SurfaceTypeResponse create(
             @Valid @RequestBody SurfaceTypeRequest request
     ) {
@@ -36,6 +40,7 @@ public class SurfaceTypeController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public SurfaceTypeResponse update(
             @PathVariable Long id,
             @Valid @RequestBody SurfaceTypeRequest request
@@ -44,6 +49,7 @@ public class SurfaceTypeController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public void delete(@PathVariable Long id) {
         surfaceTypeService.delete(id);
     }

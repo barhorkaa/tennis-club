@@ -5,6 +5,7 @@ import cz.hornakova.barbora.tennisclub.model.dto.ReservationResponse;
 import cz.hornakova.barbora.tennisclub.model.dto.ReservationUpdateRequest;
 import cz.hornakova.barbora.tennisclub.service.ReservationService;
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,11 +21,13 @@ public class ReservationController {
     }
 
     @GetMapping("/court/{courtId}")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public List<ReservationResponse> getByCourtId(@PathVariable long courtId) {
         return reservationService.getByCourtId(courtId);
     }
 
     @GetMapping("/customer/{phone}")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public List<ReservationResponse> getByCustomerPhone(
             @PathVariable String phone,
             @RequestParam(required = false, defaultValue = "false") boolean onlyFuture
@@ -33,16 +36,19 @@ public class ReservationController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public List<ReservationResponse> getAll() {
         return reservationService.getAll();
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ReservationResponse getById(@PathVariable Long id) {
         return reservationService.getById(id);
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ReservationResponse create(
             @Valid @RequestBody ReservationCreateRequest request
     ) {
@@ -50,6 +56,7 @@ public class ReservationController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ReservationResponse update(
             @PathVariable Long id,
             @Valid @RequestBody ReservationUpdateRequest request
@@ -58,6 +65,7 @@ public class ReservationController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public void delete(@PathVariable Long id) {
         reservationService.delete(id);
     }
