@@ -3,21 +3,18 @@ package cz.hornakova.barbora.tennisclub.service;
 import cz.hornakova.barbora.tennisclub.dao.CourtDao;
 import cz.hornakova.barbora.tennisclub.dao.CustomerDao;
 import cz.hornakova.barbora.tennisclub.dao.ReservationDao;
-import cz.hornakova.barbora.tennisclub.exception.ReservationCollisionException;
+import cz.hornakova.barbora.tennisclub.exception.*;
 import cz.hornakova.barbora.tennisclub.mapper.ReservationMapper;
 import cz.hornakova.barbora.tennisclub.model.dto.*;
 import cz.hornakova.barbora.tennisclub.model.entity.*;
 import cz.hornakova.barbora.tennisclub.service.impl.ReservationServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,20 +24,12 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class ReservationServiceImplTest {
 
-    @Mock
-    ReservationDao reservationDao;
+    @Mock ReservationDao reservationDao;
+    @Mock CustomerDao customerDao;
+    @Mock CourtDao courtDao;
+    @Mock ReservationMapper mapper;
 
-    @Mock
-    CustomerDao customerDao;
-
-    @Mock
-    CourtDao courtDao;
-
-    @Mock
-    ReservationMapper mapper;
-
-    @InjectMocks
-    ReservationServiceImpl service;
+    @InjectMocks ReservationServiceImpl service;
 
     @Test
     void create_shouldSetPriceAndPersistEntity() {
@@ -85,9 +74,10 @@ class ReservationServiceImplTest {
         when(mapper.toResponse(any()))
                 .thenReturn(mock(ReservationResponse.class));
 
-        ArgumentCaptor<Reservation> captor = ArgumentCaptor.forClass(Reservation.class);
-
         service.create(req);
+
+        ArgumentCaptor<Reservation> captor =
+                ArgumentCaptor.forClass(Reservation.class);
 
         verify(reservationDao).save(captor.capture());
 
@@ -96,8 +86,60 @@ class ReservationServiceImplTest {
         assertEquals(court, saved.getCourt());
         assertEquals(customer, saved.getCustomer());
         assertEquals(GameType.SINGLES, saved.getGameType());
-
         assertEquals(BigDecimal.valueOf(120), saved.getPrice());
+    }
+
+    @Test
+    void create_shouldThrowWhenOverlapping() {
+
+        ReservationCreateRequest req = new ReservationCreateRequest(
+                1L, "A", "123",
+                GameType.SINGLES,
+                LocalDate.now(),
+                LocalTime.of(10, 0),
+                LocalTime.of(11, 0)
+        );
+
+        when(courtDao.getById(anyLong()))
+                .thenReturn(Optional.of(mock(Court.class)));
+
+        when(customerDao.getByPhoneNumber(any()))
+                .thenReturn(Optional.of(new Customer()));
+
+        when(reservationDao.isOverlapping(anyLong(), any(), any(), any()))
+                .thenReturn(true);
+
+        assertThrows(ReservationCollisionException.class,
+                () -> service.create(req));
+    }
+
+    @Test
+    void getByCourtId_shouldReturnMappedList() {
+
+        Reservation r = mock(Reservation.class);
+        ReservationResponse resp = mock(ReservationResponse.class);
+
+        when(reservationDao.getByCourtId(1L)).thenReturn(List.of(r));
+        when(mapper.toResponse(r)).thenReturn(resp);
+
+        List<ReservationResponse> result = service.getByCourtId(1L);
+
+        assertEquals(1, result.size());
+    }
+
+    @Test
+    void getByCustomerPhone_withoutFilter_shouldReturnAll() {
+
+        Reservation r = mock(Reservation.class);
+        ReservationResponse resp = mock(ReservationResponse.class);
+
+        when(reservationDao.getByCustomerPhone("123")).thenReturn(List.of(r));
+        when(mapper.toResponse(r)).thenReturn(resp);
+
+        List<ReservationResponse> result =
+                service.getByCustomerPhone("123");
+
+        assertEquals(1, result.size());
     }
 
     @Test
@@ -125,6 +167,43 @@ class ReservationServiceImplTest {
     }
 
     @Test
+    void getAll_shouldReturnMappedReservations() {
+
+        Reservation r = mock(Reservation.class);
+        ReservationResponse resp = mock(ReservationResponse.class);
+
+        when(reservationDao.getAll()).thenReturn(List.of(r));
+        when(mapper.toResponse(r)).thenReturn(resp);
+
+        List<ReservationResponse> result = service.getAll();
+
+        assertEquals(1, result.size());
+    }
+
+    @Test
+    void getById_shouldReturnResponse_whenExists() {
+
+        Reservation r = mock(Reservation.class);
+        ReservationResponse resp = mock(ReservationResponse.class);
+
+        when(reservationDao.getById(1L)).thenReturn(Optional.of(r));
+        when(mapper.toResponse(r)).thenReturn(resp);
+
+        ReservationResponse result = service.getById(1L);
+
+        assertNotNull(result);
+    }
+
+    @Test
+    void getById_shouldThrow_whenNotFound() {
+
+        when(reservationDao.getById(1L)).thenReturn(Optional.empty());
+
+        assertThrows(ReservationNotFoundException.class,
+                () -> service.getById(1L));
+    }
+
+    @Test
     void update_shouldRecalculatePrice() {
 
         Reservation existing = new Reservation();
@@ -144,14 +223,9 @@ class ReservationServiceImplTest {
 
         Customer customer = new Customer();
 
-        when(reservationDao.getById(1L))
-                .thenReturn(Optional.of(existing));
-
-        when(courtDao.getById(1L))
-                .thenReturn(Optional.of(court));
-
-        when(customerDao.getById(2L))
-                .thenReturn(Optional.of(customer));
+        when(reservationDao.getById(1L)).thenReturn(Optional.of(existing));
+        when(courtDao.getById(1L)).thenReturn(Optional.of(court));
+        when(customerDao.getById(2L)).thenReturn(Optional.of(customer));
 
         when(court.getSurfaceType()).thenReturn(surface);
         when(surface.getPricePerMinute()).thenReturn(BigDecimal.valueOf(1));
@@ -168,27 +242,54 @@ class ReservationServiceImplTest {
     }
 
     @Test
-    void create_shouldThrowWhenOverlapping() {
+    void update_shouldThrow_whenEndBeforeStart() {
 
-        ReservationCreateRequest req = new ReservationCreateRequest(
-                1L, "A", "123",
+        Reservation existing = new Reservation();
+
+        ReservationUpdateRequest req = new ReservationUpdateRequest(
+                1L,
+                2L,
                 GameType.SINGLES,
                 LocalDate.now(),
-                LocalTime.of(10,0),
-                LocalTime.of(11,0)
+                LocalTime.of(12, 0),
+                LocalTime.of(10, 0),
+                false
         );
 
-        when(courtDao.getById(anyLong()))
-                .thenReturn(Optional.of(mock(Court.class)));
+        when(reservationDao.getById(1L)).thenReturn(Optional.of(existing));
+        when(courtDao.getById(anyLong())).thenReturn(Optional.of(mock(Court.class)));
+        when(customerDao.getById(anyLong())).thenReturn(Optional.of(mock(Customer.class)));
 
-        when(customerDao.getByPhoneNumber(any()))
-                .thenReturn(Optional.of(new Customer()));
+        assertThrows(InvalidReservationException.class,
+                () -> service.update(1L, req));
+    }
 
-        when(reservationDao.isOverlapping(anyLong(), any(), any(), any()))
+    @Test
+    void update_shouldThrow_whenOverlapping() {
+
+        Reservation existing = new Reservation();
+
+        ReservationUpdateRequest req = new ReservationUpdateRequest(
+                1L,
+                2L,
+                GameType.SINGLES,
+                LocalDate.now(),
+                LocalTime.of(10, 0),
+                LocalTime.of(11, 0),
+                false
+        );
+
+        Court court = mock(Court.class);
+
+        when(reservationDao.getById(1L)).thenReturn(Optional.of(existing));
+        when(courtDao.getById(anyLong())).thenReturn(Optional.of(court));
+        when(customerDao.getById(anyLong())).thenReturn(Optional.of(mock(Customer.class)));
+
+        when(reservationDao.isOverlapping(anyLong(), anyLong(), any(), any(), any()))
                 .thenReturn(true);
 
         assertThrows(ReservationCollisionException.class,
-                () -> service.create(req));
+                () -> service.update(1L, req));
     }
 
     @Test
@@ -196,11 +297,19 @@ class ReservationServiceImplTest {
 
         Reservation r = new Reservation();
 
-        when(reservationDao.getById(1L))
-                .thenReturn(Optional.of(r));
+        when(reservationDao.getById(1L)).thenReturn(Optional.of(r));
 
         service.delete(1L);
 
         verify(reservationDao).delete(r);
+    }
+
+    @Test
+    void delete_shouldThrow_whenNotFound() {
+
+        when(reservationDao.getById(1L)).thenReturn(Optional.empty());
+
+        assertThrows(ReservationNotFoundException.class,
+                () -> service.delete(1L));
     }
 }
